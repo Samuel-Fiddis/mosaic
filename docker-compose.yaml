@@ -1,0 +1,27 @@
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+      args:
+        NUM_POINTS: ${NUM_POINTS:-5000}
+    ports:
+      - "5000:5000"
+    environment:
+      - ALGORITHM_TYPE=ward_tree
+
+  fe:
+    build:
+      context: ./fe
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./fe/src:/app/src
+      - ./fe/public:/app/public
+    depends_on:
+      - api
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:5000
+    command: >
+      sh -c "npm run dev"
