@@ -1,4 +1,4 @@
-from nearest_neighbour.nn import NNAlgorithm, CIFAR_DATA
+from nearest_neighbour.nn import NNAlgorithm
 
 from scipy.cluster import hierarchy
 import numpy as np
@@ -24,12 +24,12 @@ class TreeNode:
         return self.data
 
     def find_leaf(self, img_data):
-        if self.left == None:
-            if self.right == None:
+        if self.left is None:
+            if self.right is None:
                 return self.data
             else:
                 return self.right.find_leaf(img_data)
-        elif self.right == None:
+        elif self.right is None:
             return self.left.find_leaf(img_data)
         if np.linalg.norm(self.left.data - img_data) < np.linalg.norm(
             self.right.data - img_data
@@ -56,12 +56,12 @@ def construct_tree_from_children(children, data):
         nodes.append(node)
 
     for node in nodes:
-        if node.left != None:
+        if node.left is not None:
             node.left = nodes[node.left]
-        if node.right != None:
+        if node.right is not None:
             node.right = nodes[node.right]
 
-    nodes[-1].compute_data()  # Should compute all nodes data
+    nodes[-1].compute_data()
 
     return nodes[-1]
 
@@ -71,8 +71,6 @@ class WardTree(NNAlgorithm):
         self.tree = None
 
     def fit(self, X):
-        # Placeholder for fitting a Ward hierarchical tree
-        # You can implement or import the actual logic here
         X = np.asarray(X)
         if X.ndim == 1:
             X = np.reshape(X, (-1, 1))
@@ -84,6 +82,4 @@ class WardTree(NNAlgorithm):
         self.tree = construct_tree_from_children(children, X)
 
     def query(self, x, k=1):
-        # Placeholder for querying the Ward tree
-        # You can implement or import the actual logic here
         return self.tree.find_leaf(x)

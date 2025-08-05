@@ -22,10 +22,10 @@ def load_image_to_array(image_data):
     return img_array
 
 
-
 def _process_block(args):
     i, j, block, algo = args
     return (i, j, algo.query(block))
+
 
 def process_image(image_array, algo: NNAlgorithm):
     x, y = image_array.shape[:2]

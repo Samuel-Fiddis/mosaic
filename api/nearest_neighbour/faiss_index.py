@@ -16,8 +16,6 @@ class FAISS(NNAlgorithm):
         self.index.add(X.astype("float32"))
 
     def query(self, x, k=1):
-        # Placeholder for querying the FAISS index
-        # You can implement or import the actual logic here
-        D, I = self.index.search(x, k)
-        I = np.random.choice(I[0], 1)
-        return CIFAR_DATA[I[0]].reshape(3, 32, 32).transpose(1, 2, 0).astype("uint8")
+        _, indices = self.index.search(x, k)
+        indices = np.random.choice(indices[0], 1)
+        return CIFAR_DATA[indices[0]].reshape(3, 32, 32).transpose(1, 2, 0).astype("uint8")

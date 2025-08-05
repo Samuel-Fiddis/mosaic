@@ -1,6 +1,6 @@
 # Mosaic App
 
-A single page webapp for image adjustment and the creation of mosaci images.
+A single page webapp for image adjustment and the creation of mosaic images.
 
 ![Advanced Search Example](images/example.png)
 

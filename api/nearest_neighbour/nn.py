@@ -1,5 +1,7 @@
 import pickle
+
 import numpy as np
+from nearest_neighbour.utils import unpickle
 
 CIFAR_FILES = [
     "data_batch_1",
@@ -10,20 +12,15 @@ CIFAR_FILES = [
     "test_batch",
 ]
 
-
-def unpickle(file):
-    with open(file, "rb") as fo:
-        dict = pickle.load(fo, encoding="bytes")
-    return dict
-
-
 CIFAR_DATA = np.concatenate(
-    [unpickle("./cifar-10-batches-py/" + f)[b"data"] for f in CIFAR_FILES], axis=0
+    [unpickle("/app/cifar-10-batches-py/" + f)[b"data"] for f in CIFAR_FILES], axis=0
 )
+
 DEFAULT_CLUSTER_SIZE = 40
 
 
 class NNAlgorithm:
+    """Base class for nearest neighbour algorithms used to fit and query an image dataset."""
     def fit(self, X, cluster_size=DEFAULT_CLUSTER_SIZE):
         """Fit the model to the data X."""
         raise NotImplementedError("fit method not implemented.")

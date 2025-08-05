@@ -5,6 +5,8 @@ services:
       dockerfile: Dockerfile
       args:
         NUM_POINTS: ${NUM_POINTS:-5000}
+        FLASK_DEBUG: ${FLASK_DEBUG:-1}
+        MAX_IMAGE_SIZE: ${MAX_IMAGE_SIZE:-16777216}  # 16 MB
     ports:
       - "5000:5000"
     environment:
